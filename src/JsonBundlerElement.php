@@ -39,6 +39,11 @@ class JsonBundlerElement extends FlowElement
     public $dataKey = 'jsonbundler';
 
     /**
+     * @var array<mixed>
+     */
+    public $json;
+
+    /**
      * @var array<string, array<string, mixed>>
      */
     private $propertyCache = [];
@@ -138,6 +143,7 @@ class JsonBundlerElement extends FlowElement
                 }
 
                 try {
+                    /** @var AspectPropertyValue $valueContainer */
                     $valueContainer = $flowData->get($flowElement->dataKey)->get($propertyKey);
 
                     // Check if value is of the aspect property value type

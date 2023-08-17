@@ -175,7 +175,7 @@ class SetHeaderElement extends FlowElement
      * stripping the 'SetHeader' string and the 'Component Name' from the property name.
      *
      * @param string $propertyKey Key for SetHeaderAcceptCH property
-     * @return array|string|string[] Response Header name
+     * @return string Response Header name
      * @throws \Exception
      */
     public function getResponseHeaderName($propertyKey)

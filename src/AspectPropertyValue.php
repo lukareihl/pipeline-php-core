@@ -28,7 +28,7 @@ namespace fiftyone\pipeline\core;
  * It lets you check this wrapper has a value inside it
  * If not value is set, a specific no value message is returned.
  *
- * @property string $value
+ * @property string|array<mixed> $value
  */
 class AspectPropertyValue
 {

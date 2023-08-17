@@ -62,6 +62,11 @@ class FlowData
     public $errors = [];
 
     /**
+     * @var JsonBundlerElement
+     */
+    public $jsonbundler;
+
+    /**
      * @param null|Pipeline $pipeline
      */
     public function __construct($pipeline)

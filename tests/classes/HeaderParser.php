@@ -8,7 +8,7 @@ class HeaderParser
      * Converts response headers string to an indexed array.
      *
      * @param array<string> $headers
-     * @return array<string, int|string>
+     * @return array<int|string, int|string>
      */
     public static function parse($headers)
     {
