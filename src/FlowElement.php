@@ -101,11 +101,11 @@ class FlowElement
      * Callback called when an engine is added to a pipeline.
      *
      * @param Pipeline $pipeline
-     * @return Pipeline
+     * @return void
      */
     public function onRegistration($pipeline)
     {
-        return $pipeline;
+        return;
     }
 
     /**
