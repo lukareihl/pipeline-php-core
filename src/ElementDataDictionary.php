@@ -21,44 +21,54 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-namespace fiftyone\pipeline\core\tests\classes;
+namespace fiftyone\pipeline\core;
 
-use fiftyone\pipeline\core\BasicListEvidenceKeyFilter;
-use fiftyone\pipeline\core\ElementDataDictionary;
-use fiftyone\pipeline\core\FlowElement;
-
-class ExampleFlowElement2 extends FlowElement
+/**
+ * An extension of ElementData with dictionary object storage / lookup.
+ */
+class ElementDataDictionary extends ElementData
 {
     /**
-     * @var string
+     * @var array<string, mixed>
      */
-    public $dataKey = 'example2';
+    public $contents;
 
     /**
-     * @var array<string, array<string, string>>
+     * Constructor for element data dictionary.
+     *
+     * @param FlowElement $flowElement
+     * @param array<string, mixed> $contents Dictionary contents
      */
-    public $properties = [
-        'integer2' => [
-            'type' => 'int'
-        ]
-    ];
-
-    /**
-     * @param \fiftyone\pipeline\core\FlowData $flowData
-     * @return void
-     */
-    public function processInternal($flowData)
+    public function __construct($flowElement, $contents)
     {
-        $data = new ElementDataDictionary($this, ['integer' => 7]);
+        $this->contents = $contents;
 
-        $flowData->setElementData($data);
+        parent::__construct($flowElement);
     }
 
     /**
-     * @return BasicListEvidenceKeyFilter
+     * Get the values contained in the ElementData instance as a dictionary
+     * of keys and values.
+     *
+     * @return array<string, mixed>
      */
-    public function getEvidenceKeyFilter()
+    public function asDictionary()
     {
-        return new BasicListEvidenceKeyFilter(['header.user-agent']);
+        return $this->contents;
+    }
+
+    /**
+     * Internal getter for contents.
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function getInternal($key)
+    {
+        if (isset($this->contents[$key])) {
+            return $this->contents[$key];
+        }
+
+        return null;
     }
 }

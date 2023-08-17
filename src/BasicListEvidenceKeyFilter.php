@@ -21,44 +21,49 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-namespace fiftyone\pipeline\core\tests\classes;
+namespace fiftyone\pipeline\core;
 
-use fiftyone\pipeline\core\BasicListEvidenceKeyFilter;
-use fiftyone\pipeline\core\ElementDataDictionary;
-use fiftyone\pipeline\core\FlowElement;
-
-class ExampleFlowElement2 extends FlowElement
+/**
+ * An instance of EvidenceKeyFilter that uses a simple array of keys
+ * Evidence not using these keys is filtered out.
+ */
+class BasicListEvidenceKeyFilter extends EvidenceKeyFilter
 {
     /**
-     * @var string
+     * @var array<string>
      */
-    public $dataKey = 'example2';
+    private $list;
 
     /**
-     * @var array<string, array<string, string>>
+     * @param array<string> $list an array of keys to keep
      */
-    public $properties = [
-        'integer2' => [
-            'type' => 'int'
-        ]
-    ];
-
-    /**
-     * @param \fiftyone\pipeline\core\FlowData $flowData
-     * @return void
-     */
-    public function processInternal($flowData)
+    public function __construct($list)
     {
-        $data = new ElementDataDictionary($this, ['integer' => 7]);
-
-        $flowData->setElementData($data);
+        $this->list = $list;
     }
 
     /**
-     * @return BasicListEvidenceKeyFilter
+     * @param string $key key to check in the filter
+     * @return bool is this key in the filter's keys list?
      */
-    public function getEvidenceKeyFilter()
+    public function filterEvidenceKey($key)
     {
-        return new BasicListEvidenceKeyFilter(['header.user-agent']);
+        foreach ($this->list as $evidenceKey) {
+            if (strtolower($key) === strtolower($evidenceKey)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the internal list of evidence keys in this filter.
+     *
+     * @return array<string> evidence keys
+     */
+    public function getList()
+    {
+        return $this->list;
     }
 }

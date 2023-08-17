@@ -21,44 +21,14 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-namespace fiftyone\pipeline\core\tests\classes;
+namespace fiftyone\pipeline\core;
 
-use fiftyone\pipeline\core\BasicListEvidenceKeyFilter;
-use fiftyone\pipeline\core\ElementDataDictionary;
-use fiftyone\pipeline\core\FlowElement;
-
-class ExampleFlowElement2 extends FlowElement
+/**
+ * Class containing project's constants.
+ */
+class Constants
 {
-    /**
-     * @var string
-     */
-    public $dataKey = 'example2';
-
-    /**
-     * @var array<string, array<string, string>>
-     */
-    public $properties = [
-        'integer2' => [
-            'type' => 'int'
-        ]
-    ];
-
-    /**
-     * @param \fiftyone\pipeline\core\FlowData $flowData
-     * @return void
-     */
-    public function processInternal($flowData)
-    {
-        $data = new ElementDataDictionary($this, ['integer' => 7]);
-
-        $flowData->setElementData($data);
-    }
-
-    /**
-     * @return BasicListEvidenceKeyFilter
-     */
-    public function getEvidenceKeyFilter()
-    {
-        return new BasicListEvidenceKeyFilter(['header.user-agent']);
-    }
+    public const SETHEADER_ELEMENT_KEY = 'set-headers';
+    public const SETHEADER_DATA_KEY = 'responseheaderdictionary';
+    public const ACCEPTCH_HEADER = 'Accept-CH';
 }

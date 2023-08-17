@@ -21,44 +21,30 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-namespace fiftyone\pipeline\core\tests\classes;
+namespace fiftyone\pipeline\core;
 
-use fiftyone\pipeline\core\BasicListEvidenceKeyFilter;
-use fiftyone\pipeline\core\ElementDataDictionary;
-use fiftyone\pipeline\core\FlowElement;
-
-class ExampleFlowElement2 extends FlowElement
+class Utils
 {
     /**
-     * @var string
-     */
-    public $dataKey = 'example2';
-
-    /**
-     * @var array<string, array<string, string>>
-     */
-    public $properties = [
-        'integer2' => [
-            'type' => 'int'
-        ]
-    ];
-
-    /**
-     * @param \fiftyone\pipeline\core\FlowData $flowData
+     * Set response headers in the response object (e.g. Accept-CH).
+     *
+     * @param FlowData $flowData A processed FlowData instance to get the response header values from
      * @return void
      */
-    public function processInternal($flowData)
+    public static function setResponseHeader($flowData)
     {
-        $data = new ElementDataDictionary($this, ['integer' => 7]);
+        $setHeaderElementKey = Constants::SETHEADER_ELEMENT_KEY;
+        $setHeaderDataKey = Constants::SETHEADER_DATA_KEY;
 
-        $flowData->setElementData($data);
-    }
+        // Get response headers dictionary containing key values to be set in response
+        $responseHeaderDict = $flowData->{$setHeaderElementKey}->{$setHeaderDataKey};
 
-    /**
-     * @return BasicListEvidenceKeyFilter
-     */
-    public function getEvidenceKeyFilter()
-    {
-        return new BasicListEvidenceKeyFilter(['header.user-agent']);
+        foreach ($responseHeaderDict as $responseKey => $responseValue) {
+            $responseValue = str_replace(',', ', ', $responseValue);
+
+            if (strlen($responseValue) > 0) {
+                header("{$responseKey}: {$responseValue}");
+            }
+        }
     }
 }

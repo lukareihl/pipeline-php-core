@@ -21,19 +21,24 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-
-
-namespace fiftyone\pipeline\core\tests;
+namespace fiftyone\pipeline\core\tests\classes;
 
 use fiftyone\pipeline\core\Logger;
 
 class MemoryLogger extends Logger
 {
+    /**
+     * @var array<int, array<string, mixed>>
+     */
     public $log = [];
 
+    /**
+     * @param array<string, mixed> $log
+     * @return void
+     */
     public function logInternal($log)
     {
-        if ($log["message"] === "test") {
+        if ($log['message'] === 'test') {
             $this->log[] = $log;
         }
     }

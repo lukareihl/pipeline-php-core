@@ -21,9 +21,7 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-namespace fiftyone\pipeline\engines\tests;
-
-require(__DIR__ . "/../vendor/autoload.php");
+namespace fiftyone\pipeline\core\tests;
 
 use fiftyone\pipeline\core\FlowData;
 use fiftyone\pipeline\core\ElementData;
@@ -32,21 +30,22 @@ use fiftyone\pipeline\core\Messages;
 
 use PHPUnit\Framework\TestCase;
 
-class FlowDataTests extends TestCase {
-        
+class FlowDataTests extends TestCase
+{
     /**
      * Check that an element data can be returned from a FlowData using its
      * data key.
      */
-    public function testGetWithKey() {
+    public function testGetWithKey()
+    {
         $element = $this->createMock(FlowElement::class);
-        $element->dataKey = "testKey";
+        $element->dataKey = 'testKey';
         $data = new ElementData($element);
         
         $flowData = new FlowData(null);
         $flowData->setElementData($data);
         
-        $returnedData = $flowData->get("testKey");
+        $returnedData = $flowData->get('testKey');
         $this->assertNotNull($returnedData);
     }
     
@@ -54,9 +53,10 @@ class FlowDataTests extends TestCase {
      * Check that an element data can be returned from a FlowData using its
      * data key directly via a "magic getter".
      */
-    public function testMagicGetter() {
+    public function testMagicGetter()
+    {
         $element = $this->createMock(FlowElement::class);
-        $element->dataKey = "testKey";
+        $element->dataKey = 'testKey';
         $data = new ElementData($element);
         
         $flowData = new FlowData(null);
@@ -70,9 +70,10 @@ class FlowDataTests extends TestCase {
      * Check that an element data can be returned from a FlowData using the
      * getFromElement method.
      */
-    public function testGetFromElement() {
+    public function testGetFromElement()
+    {
         $element = $this->createMock(FlowElement::class);
-        $element->dataKey = "testKey";
+        $element->dataKey = 'testKey';
         $data = new ElementData($element);
         
         $flowData = new FlowData(null);
@@ -86,24 +87,20 @@ class FlowDataTests extends TestCase {
      * Check that an exception is thrown when fetching a key which does not
      * exist in the FlowData, and that the correct error message is returned.
      */
-    public function testMissingKey() {
+    public function testMissingKey()
+    {
         $element = $this->createMock(FlowElement::class);
-        $element->dataKey = "testKey";
+        $element->dataKey = 'testKey';
         $data = new ElementData($element);
         
         $flowData = new FlowData(null);
         $flowData->setElementData($data);
         
         try {
-            $returnedData = $flowData->get("otherKey");
+            $returnedData = $flowData->get('otherKey');
             $this->fail();
-        }
-        catch (\Exception $e) {
-            $this->assertEquals(
-                sprintf(Messages::NO_ELEMENT_DATA,
-                    "otherKey",
-                    "testKey"),
-            $e->getMessage());
+        } catch (\Exception $e) {
+            $this->assertSame(sprintf(Messages::NO_ELEMENT_DATA, 'otherKey', 'testKey'), $e->getMessage());
         }
     }
     
@@ -112,9 +109,10 @@ class FlowDataTests extends TestCase {
      * getter which does not exist in the FlowData, and that the correct error
      * message is returned.
      */
-    public function testMissingKeyMagicGetter() {
+    public function testMissingKeyMagicGetter()
+    {
         $element = $this->createMock(FlowElement::class);
-        $element->dataKey = "testKey";
+        $element->dataKey = 'testKey';
         $data = new ElementData($element);
         
         $flowData = new FlowData(null);
@@ -123,13 +121,8 @@ class FlowDataTests extends TestCase {
         try {
             $returnedData = $flowData->otherKey;
             $this->fail();
-        }
-        catch (\Exception $e) {
-            $this->assertEquals(
-                sprintf(Messages::NO_ELEMENT_DATA,
-                    "otherKey",
-                    "testKey"),
-            $e->getMessage());
+        } catch (\Exception $e) {
+            $this->assertSame(sprintf(Messages::NO_ELEMENT_DATA, 'otherKey', 'testKey'), $e->getMessage());
         }
     }
     
@@ -138,13 +131,14 @@ class FlowDataTests extends TestCase {
      * getFromElement method which does not exist in the FlowData, and that the
      * correct error message is returned.
      */
-    public function testMissingKeyFromElement() {
+    public function testMissingKeyFromElement()
+    {
         $element = $this->createMock(FlowElement::class);
         $element->dataKey = "testKey";
         $data = new ElementData($element);
         
         $element2 = $this->createMock(FlowElement::class);
-        $element2->dataKey = "otherKey";
+        $element2->dataKey = 'otherKey';
         
         $flowData = new FlowData(null);
         $flowData->setElementData($data);
@@ -152,13 +146,8 @@ class FlowDataTests extends TestCase {
         try {
             $returnedData = $flowData->getFromElement($element2);
             $this->fail();
-        }
-        catch (\Exception $e) {
-            $this->assertEquals(
-                sprintf(Messages::NO_ELEMENT_DATA,
-                    "otherKey",
-                    "testKey"),
-            $e->getMessage());
+        } catch (\Exception $e) {
+            $this->assertSame(sprintf(Messages::NO_ELEMENT_DATA, 'otherKey', 'testKey'), $e->getMessage());
         }
     }
 }

@@ -21,32 +21,39 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-
-
-namespace fiftyone\pipeline\core\tests;
-
-require(__DIR__ . "/ErrorFlowData.php");
-require(__DIR__ . "/StopFlowData.php");
-require(__DIR__ . "/MemoryLogger.php");
-require(__DIR__ . "/ExampleFlowElement1.php");
-require(__DIR__ . "/ExampleFlowElement2.php");
+namespace fiftyone\pipeline\core\tests\classes;
 
 use fiftyone\pipeline\core\PipelineBuilder;
 
 // Test Pipeline builder for use with PHP unit tests
 class TestPipeline
 {
+    /**
+     * @var \fiftyone\pipeline\core\Pipeline
+     */
     public $pipeline;
 
+    /**
+     * @var ExampleFlowElement1
+     */
     public $flowElement1;
 
+    /**
+     * @var \fiftyone\pipeline\core\FlowData
+     */
     public $flowData;
 
+    /**
+     * @var MemoryLogger
+     */
     public $logger;
 
+    /**
+     * @param bool $suppressException
+     */
     public function __construct($suppressException = true)
     {
-        $this->logger = new MemoryLogger("info");
+        $this->logger = new MemoryLogger('info');
         $this->flowElement1 = new ExampleFlowElement1();
         $this->pipeline = (new PipelineBuilder())
             ->add($this->flowElement1)
@@ -57,8 +64,8 @@ class TestPipeline
             ->build();
         $this->pipeline->suppressProcessExceptions = $suppressException;
         $this->flowData = $this->pipeline->createFlowData();
-        $this->flowData->evidence->set("header.user-agent", "test");
-        $this->flowData->evidence->set("some.other-evidence", "test");
+        $this->flowData->evidence->set('header.user-agent', 'test');
+        $this->flowData->evidence->set('some.other-evidence', 'test');
         $this->flowData->process();
     }
 }

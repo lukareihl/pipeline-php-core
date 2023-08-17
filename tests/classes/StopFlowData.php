@@ -21,25 +21,32 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
+namespace fiftyone\pipeline\core\tests\classes;
 
-
-namespace fiftyone\pipeline\core\tests;
-
-use fiftyone\pipeline\core\FlowElement;
 use fiftyone\pipeline\core\BasicListEvidenceKeyFilter;
+use fiftyone\pipeline\core\FlowElement;
 
 class StopFlowData extends FlowElement
 {
-    public $dataKey = "stop";
+    /**
+     * @var string
+     */
+    public $dataKey = 'stop';
 
+    /**
+     * @param \fiftyone\pipeline\core\FlowData $flowData
+     * @return void
+     */
     public function processInternal($flowData)
     {
         $flowData->stop();
     }
 
+    /**
+     * @return BasicListEvidenceKeyFilter
+     */
     public function getEvidenceKeyFilter()
     {
-        return new BasicListEvidenceKeyFilter(["header.user-agent"]);
+        return new BasicListEvidenceKeyFilter(['header.user-agent']);
     }
 }
-

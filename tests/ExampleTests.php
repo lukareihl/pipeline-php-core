@@ -23,8 +23,6 @@
 
 namespace fiftyone\pipeline\core\tests;
 
-require(__DIR__ . "/../vendor/autoload.php");
-
 use PHPUnit\Framework\TestCase;
 
 class ExampleTests extends TestCase
@@ -32,16 +30,16 @@ class ExampleTests extends TestCase
     public function testCustomFlowElementExample()
     {
         ob_start(); // hide output
-        include __DIR__ . "/../examples/CustomFlowElement.php";
+        include __DIR__ . '/../examples/CustomFlowElement.php';
         ob_end_clean(); // discard output
 
-        $this->assertTrue(strpos($output, "Starsign") !== false);
+        $this->assertStringContainsString('Starsign', $output);
     }
 
     public function testPipelineExample()
     {
-        include __DIR__ . "/../examples/Pipeline.php";
+        include __DIR__ . '/../examples/Pipeline.php';
 
-        $this->assertTrue($FlowData->example1->exampleProperty1 === 5);
+        $this->assertSame(5, $flowData->example1->exampleProperty1);
     }
 }

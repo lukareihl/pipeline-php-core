@@ -1,4 +1,5 @@
 <?php
+
 /* *********************************************************************
  * This Original Work is copyright of 51 Degrees Mobile Experts Limited.
  * Copyright 2023 51 Degrees Mobile Experts Limited, Davidson House,
@@ -21,93 +22,89 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-use fiftyone\pipeline\core\FlowElement;
-use fiftyone\pipeline\core\ElementDataDictionary;
 use fiftyone\pipeline\core\BasicListEvidenceKeyFilter;
+use fiftyone\pipeline\core\ElementDataDictionary;
+use fiftyone\pipeline\core\FlowElement;
 
 // Two simple FlowElements
-
 class ExampleFlowElementA extends FlowElement
 {
-    public $dataKey = "example1";
-    public function processInternal($FlowData)
+    public $dataKey = 'example1';
+    public $properties = [
+        'exampleProperty1' => [
+            'type' => 'int'
+        ]
+    ];
+
+    public function processInternal($flowData)
     {
-        $data = new ElementDataDictionary($this, array("exampleProperty1" => 5));
+        $data = new ElementDataDictionary($this, ['exampleProperty1' => 5]);
 
-        $FlowData->setElementData($data);
+        $flowData->setElementData($data);
     }
-
-    public $properties = array(
-        "exampleProperty1" => array(
-            "type" => "int"
-        )
-    );
 
     public function getEvidenceKeyFilter()
     {
-        return new BasicListEvidenceKeyFilter(["header.user-agent"]);
+        return new BasicListEvidenceKeyFilter(['header.user-agent']);
     }
 }
 
 class ExampleFlowElementB extends FlowElement
 {
-    public $dataKey = "example2";
+    public $dataKey = 'example2';
+    public $properties = [
+        'exampleProperty2' => [
+            'type' => 'int'
+        ]
+    ];
 
-    public function processInternal($FlowData)
+    public function processInternal($flowData)
     {
-        $data = new ElementDataDictionary($this, array("exampleProperty2" => 7));
+        $data = new ElementDataDictionary($this, ['exampleProperty2' => 7]);
 
-        $FlowData->setElementData($data);
+        $flowData->setElementData($data);
     }
-
-    public $properties = array(
-        "exampleProperty2" => array(
-            "type" => "int"
-        )
-    );
 
     public function getEvidenceKeyFilter()
     {
-        return new BasicListEvidenceKeyFilter(["header.user-agent"]);
+        return new BasicListEvidenceKeyFilter(['header.user-agent']);
     }
 }
 
-
-if (!class_exists("errorFlowElement")) {
-// A FlowElement that triggers an error
+if (!class_exists('errorFlowElement')) {
+    // A FlowElement that triggers an error
 
     class ErrorFlowElement extends FlowElement
     {
-        public $dataKey = "error";
+        public $dataKey = 'error';
 
-        public function processInternal($FlowData)
+        public function processInternal($flowData)
         {
-            throw new Exception("Something went wrong");
+            throw new Exception('Something went wrong');
         }
 
         public function getEvidenceKeyFilter()
         {
-            return new BasicListEvidenceKeyFilter(["header.user-agent"]);
+            return new BasicListEvidenceKeyFilter(['header.user-agent']);
         }
     }
 }
 
-
-if (!class_exists("stopFlowElement")) {
+if (!class_exists('stopFlowElement')) {
     // A FlowElement that stops processing
 
     class StopFlowElement extends FlowElement
     {
-        public $dataKey = "stop";
+        public $dataKey = 'stop';
 
-        public function processInternal($FlowData)
+        public function processInternal($flowData)
         {
-            $FlowData->stop();
+            $flowData->stop();
         }
 
         public function getEvidenceKeyFilter()
         {
-            return new BasicListEvidenceKeyFilter(["header.user-agent"]);
+            return new BasicListEvidenceKeyFilter(['header.user-agent']);
         }
     }
 }

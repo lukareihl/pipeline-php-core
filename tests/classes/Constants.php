@@ -21,17 +21,16 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-namespace fiftyone\pipeline\core\tests;
-
-use fiftyone\pipeline\core\AspectPropertyValue;
+namespace fiftyone\pipeline\core\tests\classes;
 
 /**
- * Constansts used in UACHTests class.
+ * Constants used in UACHTests class.
  */
-class Constants {
-    const UNKNOWN = "Unknown";
-    const NULL_VALUE = "null";    
-    const ACCEPTCH_BROWSER_VALUE = "SEC-CH-UA,SEC-CH-UA-Full-Version";
-    const ACCEPTCH_PLATFORM_VALUE = "SEC-CH-UA-Platform,SEC-CH-UA-Platform-Version";
-    const ACCEPTCH_HARDWARE_VALUE = "SEC-CH-UA-Model,SEC-CH-UA-Mobile,SEC-CH-UA-Arch";
+class Constants
+{
+    public const UNKNOWN = 'Unknown';
+    public const NULL_VALUE = 'null';
+    public const ACCEPTCH_BROWSER_VALUE = 'SEC-CH-UA,SEC-CH-UA-Full-Version';
+    public const ACCEPTCH_PLATFORM_VALUE = 'SEC-CH-UA-Platform,SEC-CH-UA-Platform-Version';
+    public const ACCEPTCH_HARDWARE_VALUE = 'SEC-CH-UA-Model,SEC-CH-UA-Mobile,SEC-CH-UA-Arch';
 }
