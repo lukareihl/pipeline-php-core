@@ -176,8 +176,9 @@ class JavascriptBuilderElement extends FlowElement
         }
         
         $vars["_parameters"] = json_encode($jsParams);
-         
-        $output = $m->render(file_get_contents(__DIR__ . "/../javascript-templates/JavaScriptResource.mustache"), $vars);
+        
+        $templatePath = __DIR__ . '/../vendor/51degrees/fiftyone.pipeline.javascript-templates/JavaScriptResource.mustache';
+        $output = $m->render(file_get_contents($templatePath), $vars);
 
 		if($this->minify) {
             // Minify the output

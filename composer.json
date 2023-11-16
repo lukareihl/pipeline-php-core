@@ -26,7 +26,8 @@
         "ext-ctype": "*",
         "ext-json": "*",
         "mustache/mustache": "^2.13",
-        "tedivm/jshrink": "~1.0"
+        "tedivm/jshrink": "~1.0",
+        "51degrees/fiftyone.pipeline.javascript-templates": "1.*"
     },
     "require-dev": {
         "kint-php/kint": "^3.3",
@@ -41,5 +42,11 @@
         "psr-4": {
             "fiftyone\\pipeline\\core\\tests\\": "tests/"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/lukareihl/javascript-templates"
+        }
+    ]
 }
