@@ -52,7 +52,6 @@ class JavascriptBuilderElement extends FlowElement
 
         ];
         $this->minify = isset($settings["minify"]) ? $settings["minify"] : true;
-        $this->setTemplatePath();
     }
 
     public $dataKey = "javascriptbuilder";
@@ -179,7 +178,7 @@ class JavascriptBuilderElement extends FlowElement
         
         $vars["_parameters"] = json_encode($jsParams);
         
-        $output = $m->render(file_get_contents($this->templatePath), $vars);
+        $output = $m->render(file_get_contents($this->getTemplatePath()), $vars);
 
 		if($this->minify) {
             // Minify the output
@@ -193,7 +192,7 @@ class JavascriptBuilderElement extends FlowElement
         return;
     }
 
-    private function setTemplatePath()
+    private function getTemplatePath()
     {
         $templatePath = '51degrees/fiftyone.pipeline.javascript-templates/JavaScriptResource.mustache';
         
@@ -205,8 +204,7 @@ class JavascriptBuilderElement extends FlowElement
         foreach ($prefixes as $prefix) {
             $path = $prefix . $templatePath;
             if (file_exists($path)) {
-                $this->templatePath = $path;
-                return;
+                return $path;
             }
         }
 
