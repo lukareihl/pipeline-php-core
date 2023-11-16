@@ -198,7 +198,7 @@ class JavascriptBuilderElement extends FlowElement
         $templatePath = '51degrees/fiftyone.pipeline.javascript-templates/JavaScriptResource.mustache';
         
         $prefixes = [
-            __DIR__ . '/../../',
+            __DIR__ . '/../../../',
             __DIR__ . '/../vendor/'
         ];
         
