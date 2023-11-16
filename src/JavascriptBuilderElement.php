@@ -38,6 +38,7 @@ class JavascriptBuilderElement extends FlowElement
 {
     public $settings;
     public $minify;
+    private $templatePath;
 
     public function __construct($settings = array())
     {
@@ -51,6 +52,7 @@ class JavascriptBuilderElement extends FlowElement
 
         ];
         $this->minify = isset($settings["minify"]) ? $settings["minify"] : true;
+        $this->setTemplatePath();
     }
 
     public $dataKey = "javascriptbuilder";
@@ -176,8 +178,8 @@ class JavascriptBuilderElement extends FlowElement
         }
         
         $vars["_parameters"] = json_encode($jsParams);
-         
-        $output = $m->render(file_get_contents(__DIR__ . "/../javascript-templates/JavaScriptResource.mustache"), $vars);
+        
+        $output = $m->render(file_get_contents($this->templatePath), $vars);
 
 		if($this->minify) {
             // Minify the output
@@ -189,5 +191,25 @@ class JavascriptBuilderElement extends FlowElement
         $flowData->setElementData($data);
 
         return;
+    }
+
+    private function setTemplatePath()
+    {
+        $templatePath = '51degrees/fiftyone.pipeline.javascript-templates/JavaScriptResource.mustache';
+        
+        $prefixes = [
+            __DIR__ . '/../../',
+            __DIR__ . '/../vendor/'
+        ];
+        
+        foreach ($prefixes as $prefix) {
+            $path = $prefix . $templatePath;
+            if (file_exists($path)) {
+                $this->templatePath = $path;
+                return;
+            }
+        }
+
+        throw new \Exception('Could not find Mustache template');
     }
 }
